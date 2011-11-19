@@ -8,5 +8,8 @@ def minifyme(input):
 
 
 if __name__ == "__main__":
-    print minifyme(open(sys.argv[1]).read())
+    if len(sys.argv) > 1:
+        print minifyme(open(sys.argv[1]).read())
+    else:
+        print "Usage: minifyme file.js"
 
