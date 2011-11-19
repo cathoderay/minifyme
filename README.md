@@ -8,7 +8,16 @@ How to use
 Before running minifyme, I recommend using jslint and fix your errors for yourself.
 Try https://github.com/reid/node-jslint
 
-    ./minifyme.py myfile.js
+    $ ./minifyme.py file.js
+
+    Statistics
+    ==========    
+        Original file size: 166 bytes  
+        Minified file size: 90 bytes
+    
+        Removed bytes: 0.45% 
+    
+    File test.min.js written.
 
 
 How it works
