@@ -24,18 +24,19 @@ def remove_line_comments(input):
                 output += char
             continue
 
-        if not inside_string and (char == '\'' or char == '"'):
+        if (not inside_string) and (char == "'" or char == '"'):
             inside_string = True
             string_delimiter = char
             output += char
             continue
         
-        if inside_string and char == string_delimiter:
+        if (inside_string) and (char == string_delimiter):
             inside_string = False
             output += char
             continue
 
-        if not inside_string and char == '/' and index + 1 < len(input) and input[index + 1] == '/':
+        if (not inside_string) and (char == '/') and \
+           (index + 1 < len(input)) and (input[index + 1] == '/'):
             inside_comment = True
             continue
         output += char
