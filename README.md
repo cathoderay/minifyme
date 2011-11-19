@@ -5,10 +5,10 @@ Welcome to our (because it's open source) funny js minification/compression proj
 Running
 -------
 
-Before running minifyme, I recommend using jslint. Try https://github.com/reid/node-jslint
+Before running minifyme, I recommend using jslint and fix your errors.
+Try https://github.com/reid/node-jslint
 
-    jslint myfile.js #fix your errors and go ahead
-    ./minifyme myfile.js
+    ./minifyme.py myfile.js
 
 
 Performance
