@@ -26,10 +26,12 @@ function a() {
     def testCantRemoveSlashSlashInsideStrings(self):
         input = """
 function a() {
-    var x = "//asdf";
+    //a comment
+    var x = "//foo" //bar;
 }"""
         output = minifyme.minifyme(input)
         self.assertTrue(output.count('/') == 2)
+        self.assertTrue(output.find("//bar") < 0)
 
 
 if __name__ == "__main__":
