@@ -6,7 +6,7 @@ import minifyme
 class Minifyme(unittest.TestCase):
     def testRemovingLineFeeds(self):
         input = """
-function() {
+function a() {
     var x = 1;
 }
 """        
@@ -16,7 +16,7 @@ function() {
     def testremoveSlashSlashComments(self):
         input = """
 //my wonderful comment
-function() {
+function a() {
     //i'm inside my wonderful function
     var x = 1;
 }"""
