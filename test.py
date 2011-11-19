@@ -32,6 +32,7 @@ function a() {
         output = minifyme.minifyme(input)
         self.assertTrue(output.count('/') == 2)
         self.assertTrue(output.find("//bar") < 0)
+        self.assertTrue(output.find("//foo") > 0)
 
 
 if __name__ == "__main__":
