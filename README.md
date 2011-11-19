@@ -39,6 +39,7 @@ Performance
 Not yet a requirement for this project. It's just for fun!
 
 
-Next step
+Next steps
 ---------
+Parse js decently.
 Remove unnecessary white spaces.
