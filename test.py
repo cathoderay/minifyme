@@ -13,7 +13,7 @@ function a() {
         output = minifyme.minifyme(input)
         self.assertTrue(output.count('\n') == 0)
 
-    def testremoveSlashSlashComments(self):
+    def testRemovingSlashSlashComments(self):
         input = """
 //my wonderful comment
 function a() {
@@ -22,9 +22,15 @@ function a() {
 }"""
         output = minifyme.minifyme(input)
         self.assertTrue(output.count('/') == 0)
-        self.assertTrue(output.count('\n') == 0)
 
-    #TODO: test // in strings
+    def testCantRemoveSlashSlashInsideStrings(self):
+        input = """
+function a() {
+    var x = "//asdf";
+}"""
+        output = minifyme.minifyme(input)
+        self.assertTrue(output.count('/') == 2)
+
 
 if __name__ == "__main__":
     unittest.main()

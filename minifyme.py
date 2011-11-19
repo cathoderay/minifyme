@@ -3,17 +3,19 @@
 import sys
 import re
 
+from helper import compose
 
-def removeLineFeeds(input):
+
+def remove_line_feeds(input):
     return input.replace("\n", "")
 
 
-def removeLineComments(input):
+def remove_line_comments(input):
     return '\n'.join([re.sub(r'(.*)//(.*)', '\\1', line) for line in input.split('\n')])
 
 
 def minifyme(input):
-   return removeLineFeeds(removeLineComments(input))
+   return compose([remove_line_comments, remove_line_feeds], input)
 
 
 if __name__ == "__main__":
@@ -21,4 +23,3 @@ if __name__ == "__main__":
         print minifyme(open(sys.argv[1]).read())
     else:
         print "Usage: minifyme file.js"
-
