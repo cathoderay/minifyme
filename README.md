@@ -1,6 +1,5 @@
-Welcome to our minifyme!
-====================
+![Alt text](https://github.com/cathoderay/minifyme/raw/master/wiki/minifyme.png)
 
-Our (because it's open source) funny js minification/compression project.
+Welcome to our (because it's open source) funny js minification/compression project.
 
 Before running minifyme, I recommend using jslint. Try https://github.com/reid/node-jslint
