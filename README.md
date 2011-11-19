@@ -17,6 +17,12 @@ How it works
 The main idea is to apply a sequence of transformations to the input. These transformations are functions that receive a string (javascript code) and 
 returns a string (javascript code) with the same behavior when interpreted (more on minification [here](http://en.wikipedia.org/wiki/Minification_(programming\))), though, hopefully, shorter.
 
+For a while, the transformations already working are:
+
+  1. Removing '\n's
+  2. Removing // comments
+  3. Removing /**/ comments
+
 
 Performance
 -----------
