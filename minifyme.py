@@ -86,8 +86,31 @@ def minifyme(input):
                    remove_line_feeds], input)
 
 
+def print_statistics(input, output):
+    input_size = len(input)
+    output_size = len(output)
+    removed = (input_size - output_size)/float(input_size)
+    print """
+Statistics
+==========    
+    Original file size: %s bytes  
+    Minified file size: %s bytes
+
+    Removed bytes: %.4s%% 
+""" % (input_size, output_size, removed)
+
+
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        print minifyme(open(sys.argv[1]).read())
+        try:
+            input = open(sys.argv[1]).read()
+            output = minifyme(input)
+            output_filename = "%s.min.js" % sys.argv[1][:-3]
+            f = open(output_filename, 'w+')
+            f.write(output)
+            print_statistics(input, output)
+            print "File %s written." % output_filename
+        except:
+            print "Something wrong."
     else:
         print "Usage: minifyme file.js"
