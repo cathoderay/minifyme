@@ -34,6 +34,21 @@ function a() {
         self.assertTrue(output.find("//bar") < 0)
         self.assertTrue(output.find("//foo") > 0)
 
+    def testRemovingMultilineComments(self):
+        input = """
+/*
+    A mind once  
+    stretched by a new idea
+    never returns to its
+    original dimension
+*/
+    var a = 1;
+"""
+        output = minifyme.minifyme(input)    
+        self.assertTrue(output.find("mind") < 0)
+        self.assertTrue(output.find("dimension") < 0)
+        self.assertTrue(output.find("var") > 0)
+
 
 if __name__ == "__main__":
     unittest.main()
