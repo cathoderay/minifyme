@@ -11,7 +11,7 @@ function a() {
 }
 """        
         output = minifyme.remove_line_feeds(input)
-        self.assertTrue(output.count('\n') == 0)
+        self.assertEqual(0, output.count('\n'))
 
     def testRemovingSlashSlashComments(self):
         input = """
@@ -21,7 +21,7 @@ function a() {
     var x = 1;
 }"""
         output = minifyme.remove_line_comments(input)
-        self.assertTrue(output.count('/') == 0)
+        self.assertEqual(0, output.count('/'))
 
     def testCantRemoveSlashSlashInsideStrings(self):
         input = """
@@ -30,7 +30,7 @@ function a() {
     var x = "//foo" //bar;
 }"""
         output = minifyme.remove_line_comments(input)
-        self.assertTrue(output.count('/') == 2)
+        self.assertEqual(2, output.count('/'))
         self.assertTrue(output.find("//bar") < 0)
         self.assertTrue(output.find("//foo") > 0)
 
@@ -41,7 +41,7 @@ function a() {
     var x = /\sdf\//;
 }"""
         output = minifyme.remove_line_comments(input)
-        self.assertTrue(output.count('/') == 3)
+        self.assertEqual(3, output.count('/'))
 
     def testRemovingMultilineComments(self):
         input = """
