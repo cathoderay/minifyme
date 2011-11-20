@@ -91,5 +91,14 @@ function a() {
         output = minifyme.remove_multiline_comments(input)
         self.assertTrue(output.find(r'// /*asdf') >= 0)
 
+    #remove trailing white spaces
+    def testRemovingTrailingSpaces(self):
+        input = r"""
+    function() {   
+        var x = 1;          
+"""        
+        output = minifyme.remove_trailing_spaces(input)
+        self.assertEqual(5, input.count(' ') - output.count(' '))
+
 if __name__ == "__main__":
     unittest.main()

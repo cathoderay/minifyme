@@ -4,7 +4,7 @@
 import os
 import sys
 
-from helper import compose
+from helper import compose, read_input, write_output
 
 
 def remove_line_feeds(input):
@@ -162,7 +162,7 @@ def print_statistics(input, output):
     print """
 Statistics
 ==========    
-    Original file size: %s bytes
+    Original file size: %s bytes  
     Minified file size: %s bytes
 
     Removed: %s%% bytes
@@ -172,19 +172,18 @@ Statistics
 if __name__ == "__main__":
     if len(sys.argv) > 1:
         try:
-            f = open(sys.argv[1])
-            if os.path.getsize(sys.argv[1]) == 0:
+            filename = sys.argv[1]
+            if os.path.getsize(filename) == 0: 
                 print "C'mon, don't bug me! Empty file?!"
                 exit(-1)
 
-            input = ""
-            for line in f.next():
-                input += line
+            input = read_input(filename)
 
             output = minifyme(input)
+
             output_filename = "%s.min.js" % sys.argv[1][:-3]
-            f = open(output_filename, 'w+')
-            f.write(output)
+            write_output(output_filename, output)
+
             print_statistics(input, output)
             print "File %s written." % output_filename
         except Exception, e:
