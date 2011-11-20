@@ -34,7 +34,6 @@ function a() {
     var x = "//foo" //bar;
 }"""
         output = minifyme.remove_line_comments(input)
-        print output
         self.assertEqual(2, output.count(r'/'))
         self.assertTrue(output.find(r"//bar") < 0)
         self.assertTrue(output.find(r"//foo") > 0)
@@ -55,7 +54,6 @@ function a() {
         input = r"""
 var a = "bla\"test//!";"""
         output = minifyme.remove_line_comments(input)
-        print output
         self.assertTrue(output.find(r"a\"test//") > 0)
 
 
