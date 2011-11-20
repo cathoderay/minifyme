@@ -77,17 +77,22 @@ def remove_multiline_comments(input):
     string_delimiter = ''
     inside_comment = False
     inside_regex = False
+    not_output_next = False
 
     #XXX: perhaps use stack?
     for index, char in enumerate(input):
+        if not_output_next:
+            not_output_next = False
+            continue
+
         #end of a comment
         if inside_comment:
-            if (input [index - 1] != '\\' and
+            if (input[index - 1] != '\\' and
                 char == '*' and
                 index + 1 < len(input) and
                 input[index + 1] == "/"):
                 inside_comment = False
-                output += char
+                not_output_next = True
             continue
 
         #end of regex
