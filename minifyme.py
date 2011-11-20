@@ -69,48 +69,67 @@ def remove_line_comments(input):
         output += char
     return output
 
+
 #XXX: duplicated code! 
 def remove_multiline_comments(input):
     output = "" 
     inside_string = False
     string_delimiter = ''
     inside_comment = False
-    not_output = False
+    inside_regex = False
 
     #XXX: perhaps use stack?
     for index, char in enumerate(input):
-        if not_output:
-            not_output = False
-            continue
-
+        #end of a comment
         if inside_comment:
-            if (char == '*' and
+            if (input [index - 1] != '\\' and
+                char == '*' and
                 index + 1 < len(input) and
-                input[index + 1] == '/'):
+                input[index + 1] == "/"):
                 inside_comment = False
-                not_output = True
+                output += char
             continue
 
-        if (not inside_string and
-            char == "'" or
-            char == '"'):
+        #end of regex
+        if inside_regex:
+            if (input[index - 1] != '\\' and
+                char == '/'):
+                inside_regex = False
+            output += char
+            continue
+        
+        #end of string
+        if inside_string:
+            if (input[index -1] != '\\' and
+                char == string_delimiter):
+                inside_string = False
+            output += char
+            continue
+
+        #start of regex
+        if (char == '/' and
+            index + 1 < len(input) and
+            (input[index + 1] != '/') and 
+             input[index + 1] != '*'):
+            inside_regex = True
+            output += char
+            continue
+
+        #start of string
+        if (char == "'" or char == '"'):
             inside_string = True
             string_delimiter = char
             output += char
             continue
-        
-        if (inside_string and
-            char == string_delimiter):
-            inside_string = False
-            output += char
-            continue
 
-        if (not inside_string and
-            char == '/' and
-            index + 1 < len(input) and
-            input[index + 1] == '*'):
-            inside_comment = True
-            continue
+        #start of a multiline comment
+        if char == '/':
+            if (index + 1 < len(input) and
+                input[index + 1] == '*'):
+                inside_comment = True
+                continue
+
+        #otherwise
         output += char
     return output
 
