@@ -53,12 +53,19 @@ function a() {
     original dimension
 */
     var a = 1;
-    var a = "/*asdf*/"
 """
         output = minifyme.remove_multiline_comments(input)    
         self.assertTrue(output.find("mind") < 0)
         self.assertTrue(output.find("dimension") < 0)
         self.assertTrue(output.find("var") > 0)
+
+    def testCantRemoveFakeMultilineCommentsInsideStrings(self):
+        input = """
+function() {
+    var a = "/*asdf*/";
+    }
+"""
+        output = minifyme.remove_multiline_comments(input)
         self.assertTrue(output.find('"/*asdf*/"') > 0)
 
 
