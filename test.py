@@ -9,6 +9,7 @@ class Minifyme(unittest.TestCase):
         input = r"""
 function a() {
     var x = 1;
+    var y = "\n"
 }
 """        
         output = minifyme.remove_line_feeds(input)
@@ -52,6 +53,7 @@ function a() {
         input = r'/* test*/'
         output = minifyme.remove_line_comments(input)
         self.assertTrue(output.find(r'/* test*/') >= 0)
+
 
     #remove multiline comments
     def testRemovingMultilineComments(self):

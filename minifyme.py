@@ -1,5 +1,7 @@
 #!/usr/bin/env python
+# -*- coding:utf-8 -*-
 
+import os
 import sys
 
 from helper import compose
@@ -156,28 +158,37 @@ def minifyme(input):
 def print_statistics(input, output):
     input_size = len(input)
     output_size = len(output)
-    removed = (input_size - output_size)/float(input_size)
+    removed = 100*(input_size - output_size)/float(input_size)
     print """
 Statistics
 ==========    
-    Original file size: %s bytes  
+    Original file size: %s bytes
     Minified file size: %s bytes
 
-    Removed: %.4s%% bytes
+    Removed: %s%% bytes
 """ % (input_size, output_size, removed)
 
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
         try:
-            input = open(sys.argv[1]).read()
+            f = open(sys.argv[1])
+            if os.path.getsize(sys.argv[1]) == 0:
+                print "C'mon, don't bug me! Empty file?!"
+                exit(-1)
+
+            input = ""
+            for line in f.next():
+                input += line
+
             output = minifyme(input)
             output_filename = "%s.min.js" % sys.argv[1][:-3]
             f = open(output_filename, 'w+')
             f.write(output)
             print_statistics(input, output)
             print "File %s written." % output_filename
-        except:
+        except Exception, e:
             print "Something wrong."
+            print e
     else:
         print "Usage: minifyme file.js"
