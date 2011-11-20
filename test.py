@@ -60,9 +60,11 @@ function a() {
     var a = 1;
 """
         output = minifyme.remove_multiline_comments(input)    
-        self.assertTrue(output.find(r"mind") < 0)
-        self.assertTrue(output.find(r"dimension") < 0)
-        self.assertTrue(output.find(r"var") > 0)
+        self.assertTrue(output.find(r'mind') < 0)
+        self.assertTrue(output.find(r'dimension') < 0)
+        self.assertTrue(output.find(r'/*') < 0)
+        self.assertTrue(output.find(r'*/') < 0)
+        self.assertTrue(output.find(r'var') > 0)
 
 
     def testCantRemoveFakeMultilineCommentsInsideStrings(self):
