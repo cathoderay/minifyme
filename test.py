@@ -48,6 +48,11 @@ function a() {
         self.assertTrue(output.find(r"a\"test//") > 0)
 
 
+    def testCantRemoveMultilinecommentWhenRemovingLineComments(self):
+        input = r'/* test*/'
+        output = minifyme.remove_line_comments(input)
+        self.assertTrue(output.find(r'/* test*/') >= 0)
+
     #remove multiline comments
     def testRemovingMultilineComments(self):
         input = r"""
@@ -80,9 +85,9 @@ function a() {
 
 
     def testCantRemoveLineCommentWhenRemovingMultilineComments(self):
-        input = r'// asdf' 
+        input = r'// /*asdf' 
         output = minifyme.remove_multiline_comments(input)
-        self.assertTrue(output.find(r'// asdf') >= 0)
+        self.assertTrue(output.find(r'// /*asdf') >= 0)
 
 if __name__ == "__main__":
     unittest.main()
