@@ -6,7 +6,7 @@ import minifyme
 class Minifyme(unittest.TestCase):
     #line feeds tests
     def testRemovingLineFeeds(self):
-        input = """
+        input = r"""
 function a() {
     var x = 1;
 }
@@ -17,7 +17,7 @@ function a() {
 
     #line comments tests
     def testRemovingSlashSlashComments(self):
-        input = """
+        input = r"""
 //my wonderful comment
 function a() {
     //i'm inside my wonderful function
@@ -28,38 +28,40 @@ function a() {
 
 
     def testCantRemoveSlashSlashInsideStrings(self):
-        input = """
+        input = r"""
 function a() {
     //a comment
     var x = "//foo" //bar;
 }"""
         output = minifyme.remove_line_comments(input)
-        self.assertEqual(2, output.count('/'))
-        self.assertTrue(output.find("//bar") < 0)
-        self.assertTrue(output.find("//foo") > 0)
+        print output
+        self.assertEqual(2, output.count(r'/'))
+        self.assertTrue(output.find(r"//bar") < 0)
+        self.assertTrue(output.find(r"//foo") > 0)
 
 
     def testCantRemoveSlashSlashInsideRegex(self):
-        input = """
+        input = r"""
 function a() {
     //a comment
     var x = /^\/\//;
 }"""
         output = minifyme.remove_line_comments(input)
-        self.assertEqual(4, output.count('/'))
-        self.assertTrue(output.find('/^\/\//;') > 0)
+        self.assertEqual(4, output.count(r'/'))
+        self.assertTrue(output.find(r'/^\/\//;') > 0)
 
 
     def testScapeAreInterpretedInsideStrings(self):
-        input = """
+        input = r"""
 var a = "bla\"test//!";"""
         output = minifyme.remove_line_comments(input)
-        self.assertTrue(output.find("a\"test//") > 0)
+        print output
+        self.assertTrue(output.find(r"a\"test//") > 0)
 
 
     #remove multiline comments
     def testRemovingMultilineComments(self):
-        input = """
+        input = r"""
 /*
     A mind once  
     stretched by a new idea
@@ -69,19 +71,19 @@ var a = "bla\"test//!";"""
     var a = 1;
 """
         output = minifyme.remove_multiline_comments(input)    
-        self.assertTrue(output.find("mind") < 0)
-        self.assertTrue(output.find("dimension") < 0)
-        self.assertTrue(output.find("var") > 0)
+        self.assertTrue(output.find(r"mind") < 0)
+        self.assertTrue(output.find(r"dimension") < 0)
+        self.assertTrue(output.find(r"var") > 0)
 
 
     def testCantRemoveFakeMultilineCommentsInsideStrings(self):
-        input = """
+        input = r"""
 function() {
     var a = "/*asdf*/";
     }
 """
         output = minifyme.remove_multiline_comments(input)
-        self.assertTrue(output.find('"/*asdf*/"') > 0)
+        self.assertTrue(output.find(r'"/*asdf*/"') > 0)
 
 
 

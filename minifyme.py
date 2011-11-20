@@ -18,6 +18,7 @@ def remove_line_comments(input):
 
     #XXX: perhaps use stack?
     for index, char in enumerate(input):
+        print "%s - r: %s, s: %s, c: %s" % (char, inside_regex, inside_string, inside_comment)
         if inside_comment:
             if char == '\n':
                 inside_comment = False
@@ -38,18 +39,21 @@ def remove_line_comments(input):
             input[index + 1] != '/'):
             inside_regex = True
             output += char
-            continue 
+            continue
 
         if (not inside_string and
+            index - 1 >= 0 and
+            input[index - 1] != '\\' and
             (char == "'" or char == '"')):
             inside_string = True
             string_delimiter = char
             output += char
             continue
         
-        if (inside_string and
-            char == string_delimiter):
-            inside_string = False
+        if inside_string:
+            if (input[index - 1] != '\\' and
+                char == string_delimiter):
+                inside_string = False
             output += char
             continue
 
