@@ -58,7 +58,7 @@ def remove_line_comments(input):
             output += char
             continue
 
-        #start of a comment
+        #start of a line comment
         if char == '/':
             if (index + 1 < len(input) and
                 input[index + 1] == '/'):
