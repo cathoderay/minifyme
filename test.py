@@ -42,7 +42,7 @@ function a() {
 }"""
         output = minifyme.remove_line_comments(input)
         self.assertEqual(3, output.count('/'))
-        self.assertTrue(output.find('x = /\sdf\//') > 0)
+        self.assertTrue(output.find('/\sdf\//') > 0)
 
     def testRemovingMultilineComments(self):
         input = """
@@ -53,11 +53,15 @@ function a() {
     original dimension
 */
     var a = 1;
+    var a = "/*asdf*/"
 """
         output = minifyme.remove_multiline_comments(input)    
         self.assertTrue(output.find("mind") < 0)
         self.assertTrue(output.find("dimension") < 0)
         self.assertTrue(output.find("var") > 0)
+        self.assertTrue(output.find('"/*asdf*/"') > 0)
+
+
 
 
 if __name__ == "__main__":
