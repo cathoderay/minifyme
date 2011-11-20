@@ -27,7 +27,7 @@ def remove_line_comments(input):
         if inside_regex:
             if char == '/':
                 inside_regex = False
-                output += char
+            output += char
             continue
 
         if (not inside_regex) and (not inside_string) and (char == '/') and \
