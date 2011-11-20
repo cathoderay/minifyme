@@ -32,42 +32,39 @@ def remove_line_comments(input):
                 inside_regex = False
             output += char
             continue
-
-        #start of regex
-        if (not inside_regex and
-            not inside_string and
-            char == '/' and
-            index + 1 < len(input) and
-            input[index + 1] != '/'):
-            inside_regex = True
-            output += char
-            continue
-
-        #start of string
-        if (not inside_string and
-            index - 1 >= 0 and
-            input[index - 1] != '\\' and
-            (char == "'" or char == '"')):
-            inside_string = True
-            string_delimiter = char
-            output += char
-            continue
         
-        #consuming string, check for its end
+        #end of string
         if inside_string:
-            if (input[index - 1] != '\\' and
+            if (input[index -1] != '\\' and
                 char == string_delimiter):
                 inside_string = False
             output += char
             continue
 
-        #start of a comment
-        if (not inside_string and
-            char == '/' and
+        #start of regex
+        if (char == '/' and
             index + 1 < len(input) and
-            input[index + 1] == '/'):
-            inside_comment = True
+            (input[index + 1] != '/') and 
+             input[index + 1] != '*'):
+            inside_regex = True
+            output += char
             continue
+
+        #start of string
+        if (char == "'" or char == '"'):
+            inside_string = True
+            string_delimiter = char
+            output += char
+            continue
+
+        #start of a comment
+        if char == '/':
+            if (index + 1 < len(input) and
+                input[index + 1] == '/'):
+                inside_comment = True
+                continue
+
+        #otherwise
         output += char
     return output
 
