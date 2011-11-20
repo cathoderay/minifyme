@@ -41,7 +41,7 @@ function a() {
     var x = /^\/\//;
 }"""
         output = minifyme.remove_line_comments(input)
-        self.assertEqual(3, output.count('/'))
+        self.assertEqual(4, output.count('/'))
         self.assertTrue(output.find('/^\/\//;') > 0)
 
     def testRemovingMultilineComments(self):
