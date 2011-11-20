@@ -150,7 +150,7 @@ Statistics
     Original file size: %s bytes  
     Minified file size: %s bytes
 
-    Removed bytes: %.4s%% 
+    Removed: %.4s%% bytes
 """ % (input_size, output_size, removed)
 
 
