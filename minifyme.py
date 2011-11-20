@@ -20,15 +20,16 @@ def remove_line_comments(input):
     for index, char in enumerate(input):
         #end of a comment
         if inside_comment:
-            if char == '\n':
+            if (input [index - 1] != '\\' and
+                char == '\n'):
                 inside_comment = False
                 output += char
             continue
 
         #end of regex
         if inside_regex:
-            if (char == '/' and
-                input[index - 1] != '\\'):
+            if (input[index - 1] != '\\' and
+                char == '/'):
                 inside_regex = False
             output += char
             continue
