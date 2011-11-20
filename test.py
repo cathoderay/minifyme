@@ -77,7 +77,12 @@ function a() {
         input = r'var a = /\/*asdf*\//;'
         output = minifyme.remove_multiline_comments(input)
         self.assertTrue(output.find(r'/*asdf*\/') > 0)
-    
+
+
+    def testCantRemoveLineCommentWhenRemovingMultilineComments(self):
+        input = r'// asdf' 
+        output = minifyme.remove_multiline_comments(input)
+        self.assertTrue(output.find(r'// asdf') >= 0)
 
 if __name__ == "__main__":
     unittest.main()

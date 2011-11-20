@@ -75,7 +75,8 @@ def remove_multiline_comments(input):
     output = "" 
     inside_string = False
     string_delimiter = ''
-    inside_comment = False
+    inside_line_comment = False
+    inside_multiline_comment = False
     inside_regex = False
     not_output_next = False
 
@@ -85,13 +86,21 @@ def remove_multiline_comments(input):
             not_output_next = False
             continue
 
-        #end of a comment
-        if inside_comment:
+        #end of line comment
+        if inside_line_comment:
+            if (input [index - 1] != '\\' and
+                char == '\n'):
+                inside_line_comment = False
+            output += char
+            continue
+
+        #end of a multiline comment
+        if inside_multiline_comment:
             if (input[index - 1] != '\\' and
                 char == '*' and
                 index + 1 < len(input) and
                 input[index + 1] == "/"):
-                inside_comment = False
+                inside_multiline_comment = False
                 not_output_next = True
             continue
 
@@ -111,14 +120,20 @@ def remove_multiline_comments(input):
             output += char
             continue
 
-        #start of regex
-        if (char == '/' and
-            index + 1 < len(input) and
-            (input[index + 1] != '/') and 
-             input[index + 1] != '*'):
-            inside_regex = True
-            output += char
-            continue
+        #start of regex, line comment or multiline comment
+        if char == '/':
+            if index + 1 < len(input):
+               if input[index + 1] == '/':
+                   inside_line_comment = True
+                   output += char
+                   continue
+               elif input[index + 1] == '*':
+                   inside_multiline_comment = True
+                   continue
+               else:
+                   inside_regex = True
+                   output += char
+                   continue
 
         #start of string
         if (char == "'" or char == '"'):
@@ -126,13 +141,6 @@ def remove_multiline_comments(input):
             string_delimiter = char
             output += char
             continue
-
-        #start of a multiline comment
-        if char == '/':
-            if (index + 1 < len(input) and
-                input[index + 1] == '*'):
-                inside_comment = True
-                continue
 
         #otherwise
         output += char
