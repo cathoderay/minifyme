@@ -18,12 +18,14 @@ def remove_line_comments(input):
 
     #XXX: perhaps use stack?
     for index, char in enumerate(input):
+        #end of a comment
         if inside_comment:
             if char == '\n':
                 inside_comment = False
                 output += char
             continue
 
+        #end of regex
         if inside_regex:
             if (char == '/' and
                 input[index - 1] != '\\'):
@@ -31,6 +33,7 @@ def remove_line_comments(input):
             output += char
             continue
 
+        #start of regex
         if (not inside_regex and
             not inside_string and
             char == '/' and
@@ -40,6 +43,7 @@ def remove_line_comments(input):
             output += char
             continue
 
+        #start of string
         if (not inside_string and
             index - 1 >= 0 and
             input[index - 1] != '\\' and
@@ -49,6 +53,7 @@ def remove_line_comments(input):
             output += char
             continue
         
+        #consuming string, check for its end
         if inside_string:
             if (input[index - 1] != '\\' and
                 char == string_delimiter):
@@ -56,6 +61,7 @@ def remove_line_comments(input):
             output += char
             continue
 
+        #start of a comment
         if (not inside_string and
             char == '/' and
             index + 1 < len(input) and
