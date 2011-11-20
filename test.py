@@ -42,6 +42,7 @@ function a() {
 }"""
         output = minifyme.remove_line_comments(input)
         self.assertEqual(3, output.count('/'))
+        self.assertTrue(output.find('x = /\sdf\//') > 0)
 
     def testRemovingMultilineComments(self):
         input = """
