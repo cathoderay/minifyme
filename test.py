@@ -92,14 +92,17 @@ function a() {
         self.assertTrue(output.find(r'// /*asdf') >= 0)
 
 
-    #remove trailing white spaces
-    def testRemovingLeadingAndTrailingSpaces(self):
-        input = r"""
+    #remove leading and trailing whitespaces
+    def testRemovingLeadingAndTrailingWhitespaces(self):
+        input = """
     function() {  
-        var x = 1;   
+\t\r        var x = 1;   
 """        
-        output = minifyme.remove_leading_and_trailing_spaces(input)
-        self.assertEqual(17, input.count(r' ') - output.count(r' '))
+        output = minifyme.remove_leading_and_trailing_whitespaces(input)
+        self.assertEqual(4, output.count(r' '))
+        self.assertEqual(0, output.count(r'\t'))
+        self.assertEqual(0, output.count(r'\r'))
+
 
 if __name__ == "__main__":
     unittest.main()

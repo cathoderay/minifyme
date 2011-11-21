@@ -11,8 +11,8 @@ def remove_line_feeds(input):
     return input.replace("\n", "")
 
 
-def remove_leading_and_trailing_spaces(input):
-    return '\n'.join([line.strip(' ') for line in input.split('\n')])
+def remove_leading_and_trailing_whitespaces(input):
+    return '\n'.join([line.strip(' \r\t') for line in input.split('\n')])
 
 
 def remove_line_comments(input):
@@ -156,7 +156,7 @@ def remove_multiline_comments(input):
 def minifyme(input):
    return compose([remove_multiline_comments,
                    remove_line_comments,
-                   remove_leading_and_trailing_spaces,
+                   remove_leading_and_trailing_whitespaces,
                    remove_line_feeds], input)
 
 
