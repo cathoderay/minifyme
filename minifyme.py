@@ -8,7 +8,7 @@ from helper import compose, read_input, write_output
 
 
 def remove_line_feeds(input):
-    return input.replace("\n", "")
+    return input.replace('\n', '')
 
 
 def remove_leading_and_trailing_whitespaces(input):
@@ -19,17 +19,28 @@ def remove_line_comments(input):
     output = "" 
     inside_string = False
     string_delimiter = ''
-    inside_comment = False
+    inside_line_comment = False
+    inside_multiline_comment = False
     inside_regex = False
 
     #XXX: perhaps use stack?
     for index, char in enumerate(input):
-        #end of a comment
-        if inside_comment:
+        #end of line comment
+        if inside_line_comment:
             if (input [index - 1] != '\\' and
                 char == '\n'):
-                inside_comment = False
+                inside_line_comment = False
                 output += char
+            continue
+
+        #end of a multiline comment
+        if inside_multiline_comment:
+            if (input[index - 1] != '\\' and
+                char == '*' and
+                index + 1 < len(input) and
+                input[index + 1] == "/"):
+                inside_multiline_comment = False
+            output += char
             continue
 
         #end of regex
@@ -48,14 +59,20 @@ def remove_line_comments(input):
             output += char
             continue
 
-        #start of regex
-        if (char == '/' and
-            index + 1 < len(input) and
-            (input[index + 1] != '/') and 
-             input[index + 1] != '*'):
-            inside_regex = True
-            output += char
-            continue
+        #start of regex, line comment or multiline comment
+        if char == '/':
+            if index + 1 < len(input):
+               if input[index + 1] == '/':
+                   inside_line_comment = True
+                   continue
+               elif input[index + 1] == '*':
+                   inside_multiline_comment = True
+                   output += char
+                   continue
+               else:
+                   inside_regex = True
+                   output += char
+                   continue
 
         #start of string
         if (char == "'" or char == '"'):
@@ -63,13 +80,6 @@ def remove_line_comments(input):
             string_delimiter = char
             output += char
             continue
-
-        #start of a line comment
-        if char == '/':
-            if (index + 1 < len(input) and
-                input[index + 1] == '/'):
-                inside_comment = True
-                continue
 
         #otherwise
         output += char
@@ -156,8 +166,7 @@ def remove_multiline_comments(input):
 def minifyme(input):
    return compose([remove_multiline_comments,
                    remove_line_comments,
-                   remove_leading_and_trailing_whitespaces,
-                   remove_line_feeds], input)
+                   remove_leading_and_trailing_whitespaces], input)
 
 
 def print_statistics(input, output):

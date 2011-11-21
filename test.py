@@ -94,14 +94,14 @@ function a() {
 
     #remove leading and trailing whitespaces
     def testRemovingLeadingAndTrailingWhitespaces(self):
-        input = """
+        input = r"""
     function() {  
-\t\r        var x = 1;   
-"""        
+	        var x = 1;   
+"""
         output = minifyme.remove_leading_and_trailing_whitespaces(input)
         self.assertEqual(4, output.count(r' '))
         self.assertEqual(0, output.count(r'\t'))
-        self.assertEqual(0, output.count(r'\r'))
+        #test '\r'
 
 
 if __name__ == "__main__":
