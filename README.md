@@ -28,9 +28,10 @@ returns a string (javascript code) with the same behavior when interpreted (more
 
 For a while, transformations already working are:
 
-  1. Removing '\n's
-  2. Removing // comments
-  3. Removing /**/ comments
+
+  1. Removing leading and trailing whitespaces: '\r', '\t', ' '.;
+  2. Removing // comments;
+  3. Removing /**/ comments;
 
 
 Performance
