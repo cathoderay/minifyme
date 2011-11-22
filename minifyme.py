@@ -7,7 +7,7 @@ import sys
 from helper import compose, read_input, write_output
 
 
-#doenst work in all cases
+#doesn't work in all cases
 def remove_line_feeds(input):
     return input.replace('\n', '')
 
