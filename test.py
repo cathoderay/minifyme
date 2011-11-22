@@ -6,12 +6,12 @@ import minifyme
 class Minifyme(unittest.TestCase):
     #line feeds tests
     def testRemovingLineFeeds(self):
-        input = r"""
-function a() {
-    var x = 1;
-    var y = "\n"
-}
-"""        
+        input = r'''
+        function a() {
+            var x = 1;
+            var y = "\n"
+        }
+        '''
         output = minifyme.remove_line_feeds(input)
         self.assertEqual(0, output.count('\n'))
 
@@ -19,11 +19,11 @@ function a() {
     #line comments tests
     def testRemovingSlashSlashComments(self):
         input = r"""
-//my wonderful comment
-function a() {
-    //i'm inside my wonderful function
-    var x = 1;
-}"""
+        //my wonderful comment
+        function a() {
+            //i'm inside my wonderful function
+            var x = 1;
+        }"""
         output = minifyme.remove_line_comments(input)
         self.assertEqual(0, output.count('/'))
 
@@ -57,15 +57,15 @@ function a() {
 
     #remove multiline comments
     def testRemovingMultilineComments(self):
-        input = r"""
-/*
-    A mind once  
-    stretched by a new idea
-    never returns to its
-    original dimension
-*/
-    var a = 1;
-"""
+        input = r'''
+	/*
+	    A mind once  
+	    stretched by a new idea
+	    never returns to its
+	    original dimension
+	*/
+	    var a = 1;
+	'''
         output = minifyme.remove_multiline_comments(input)    
         self.assertTrue(output.find(r'mind') < 0)
         self.assertTrue(output.find(r'dimension') < 0)
@@ -94,10 +94,10 @@ function a() {
 
     #remove leading and trailing whitespaces
     def testRemovingLeadingAndTrailingWhitespaces(self):
-        input = r"""
-    function() {  
+        input = r'''
+        function() {  
 	        var x = 1;   
-"""
+        '''
         output = minifyme.remove_leading_and_trailing_whitespaces(input)
         self.assertEqual(4, output.count(r' '))
         self.assertEqual(0, output.count(r'\t'))
