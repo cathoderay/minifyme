@@ -23,9 +23,15 @@ def remove_line_comments(input):
     inside_line_comment = False
     inside_multiline_comment = False
     inside_regex = False
+    end_of_multiline_comment = False
 
     #XXX: perhaps use stack?
     for index, char in enumerate(input):
+        if end_of_multiline_comment:
+            end_of_multiline_comment = False
+            output += char
+            continue
+
         #end of line comment
         if inside_line_comment:
             if (input [index - 1] != '\\' and
@@ -41,6 +47,7 @@ def remove_line_comments(input):
                 index + 1 < len(input) and
                 input[index + 1] == "/"):
                 inside_multiline_comment = False
+                end_of_multiline_comment = True
             output += char
             continue
 
