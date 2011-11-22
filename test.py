@@ -18,12 +18,12 @@ class Minifyme(unittest.TestCase):
 
     #line comments tests
     def testRemovingSlashSlashComments(self):
-        input = r"""
+        input = r'''
         //my wonderful comment
         function a() {
             //i'm inside my wonderful function
             var x = 1;
-        }"""
+        }'''
         output = minifyme.remove_line_comments(input)
         self.assertEqual(0, output.count('/'))
 
