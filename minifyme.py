@@ -17,19 +17,58 @@ def remove_leading_and_trailing_whitespaces(input):
 
 
 def remove_line_comments(input):
-    output = "" 
+    output = r""
     inside_string = False
     string_delimiter = ''
     inside_line_comment = False
     inside_multiline_comment = False
     inside_regex = False
     end_of_multiline_comment = False
+    scape_next = False
+
+    #debugging
+    line_comment = r""
+    multiline_comment = r""
+    regex = r""
+    string = r""
+
 
     #XXX: perhaps use stack?
     for index, char in enumerate(input):
+        #print "%s - r: %s, s: %s, c: %s, mc: %s" % (char, inside_regex, inside_string, inside_line_comment, inside_multiline_comment)
+
+        if scape_next:
+            if not inside_line_comment:
+                output += char
+
+            #debugging
+            if inside_regex:
+                regex += char
+            if inside_line_comment:
+                line_comment += char
+            if inside_multiline_comment:
+                multiline_comment += char
+            if inside_string:
+                string += char
+
+            scape_next = False
+            continue
+
+        if char == '\\':
+            scape_next = True
+            if not inside_line_comment:
+                output += char
+            continue
+
         if end_of_multiline_comment:
             end_of_multiline_comment = False
             output += char
+
+            #debugging
+            multiline_comment += char
+            print "multiline: [%s]" % multiline_comment
+            multiline_comment = ""
+
             continue
 
         #end of line comment
@@ -38,6 +77,15 @@ def remove_line_comments(input):
                 char == '\n'):
                 inside_line_comment = False
                 output += char
+
+                #debugging
+                print "line comment: [%s]" % line_comment
+                line_comment = ""
+                continue
+
+            #debugging
+            line_comment += char
+ 
             continue
 
         #end of a multiline comment
@@ -49,14 +97,29 @@ def remove_line_comments(input):
                 inside_multiline_comment = False
                 end_of_multiline_comment = True
             output += char
+            
+            #debugging
+            multiline_comment += char
+
             continue
 
         #end of regex
         if inside_regex:
-            if (input[index - 1] != '\\' and
-                char == '/'):
+            if char == '/':
                 inside_regex = False
+
+                #debugging
+                regex += char
+                print "regex: [%s]" % regex
+                regex = ""
+                output += char
+                continue
+
+            #debugging
+            regex += char
+
             output += char
+
             continue
         
         #end of string
@@ -64,7 +127,18 @@ def remove_line_comments(input):
             if (input[index -1] != '\\' and
                 char == string_delimiter):
                 inside_string = False
+
+                #debugging
+                string += char
+                print "string: [%s]" % string
+                string = ""
+                continue
+
+            #debugging
+            string += char                
+
             output += char
+
             continue
 
         #start of regex, line comment or multiline comment
@@ -72,14 +146,26 @@ def remove_line_comments(input):
             if index + 1 < len(input):
                if input[index + 1] == '/':
                    inside_line_comment = True
+
+                   #debugging
+                   line_comment += char
+
                    continue
                elif input[index + 1] == '*':
                    inside_multiline_comment = True
                    output += char
+
+                   #debugging
+                   multiline_comment += char
+
                    continue
                else:
                    inside_regex = True
                    output += char
+
+                   #debugging
+                   regex += char
+
                    continue
 
         #start of string
@@ -87,6 +173,10 @@ def remove_line_comments(input):
             inside_string = True
             string_delimiter = char
             output += char
+
+            #debugging
+            string += char
+
             continue
 
         #otherwise
@@ -172,6 +262,7 @@ def remove_multiline_comments(input):
 
 
 def minifyme(input):
+   return compose([remove_line_comments], input)
    return compose([remove_multiline_comments,
                    remove_line_comments,
                    remove_leading_and_trailing_whitespaces], input)

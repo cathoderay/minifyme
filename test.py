@@ -94,11 +94,11 @@ class Minifyme(unittest.TestCase):
         self.assertEqual(4, output.count(r' '))
         self.assertEqual(0, output.count(r'\t'))
         #test '\r'
-
+ 
     def test_backslash_end_of_regex(self):
-        input = "var x = /\\/g; //foo bar"
+        input = r'var x = /\\/g; //foo bar'
         output = minifyme.remove_line_comments(input)
-        self.assertTrue(output.find("//foo bar") < 0)
+        self.assertTrue(output.find('//foo bar') < 0)
 
 
 if __name__ == "__main__":
