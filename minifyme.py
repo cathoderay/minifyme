@@ -73,8 +73,7 @@ def remove_line_comments(input):
 
         #end of line comment
         if inside_line_comment:
-            if (input [index - 1] != '\\' and
-                char == '\n'):
+            if char == '\n':
                 inside_line_comment = False
                 output += char
 
@@ -90,10 +89,9 @@ def remove_line_comments(input):
 
         #end of a multiline comment
         if inside_multiline_comment:
-            if (input[index - 1] != '\\' and
-                char == '*' and
-                index + 1 < len(input) and
-                input[index + 1] == "/"):
+            if char == '*' and
+               index + 1 < len(input) and
+               input[index + 1] == "/"):
                 inside_multiline_comment = False
                 end_of_multiline_comment = True
             output += char

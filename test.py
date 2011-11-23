@@ -61,6 +61,13 @@ class Minifyme(unittest.TestCase):
         output = minifyme.remove_line_comments(input)
         self.assertTrue(output.find('//foo') < 0)
 
+    def test_backslash_end_of_line_comment(self):
+        input = r'''
+            var x = "testingdoublebackslash\\" //foo\\
+        '''
+        output = minifyme.remove_line_comments(input)
+        self.assertTrue(output.find(r'//foo\\') < 0)
+
     #remove multiline comments
     def test_removing_multiline_comments(self):
         input = r'''
