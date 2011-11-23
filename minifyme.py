@@ -124,8 +124,7 @@ def remove_line_comments(input):
         
         #end of string
         if inside_string:
-            if (input[index -1] != '\\' and
-                char == string_delimiter):
+            if char == string_delimiter:
                 inside_string = False
 
                 #debugging

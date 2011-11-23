@@ -51,6 +51,16 @@ class Minifyme(unittest.TestCase):
         output = minifyme.remove_line_comments(input)
         self.assertTrue(output.find(r'/* test*/') >= 0)
 
+    def test_backslash_end_of_regex(self):
+        input = r'var x = /\\/g; //foo bar'
+        output = minifyme.remove_line_comments(input)
+        self.assertTrue(output.find('//foo bar') < 0)
+
+    def test_backslash_end_of_string(self):
+        input = r'var x = "testingdoublebackslash\\" //foo'
+        output = minifyme.remove_line_comments(input)
+        self.assertTrue(output.find('//foo') < 0)
+
     #remove multiline comments
     def test_removing_multiline_comments(self):
         input = r'''
@@ -95,10 +105,6 @@ class Minifyme(unittest.TestCase):
         self.assertEqual(0, output.count(r'\t'))
         #test '\r'
  
-    def test_backslash_end_of_regex(self):
-        input = r'var x = /\\/g; //foo bar'
-        output = minifyme.remove_line_comments(input)
-        self.assertTrue(output.find('//foo bar') < 0)
 
 
 if __name__ == "__main__":
