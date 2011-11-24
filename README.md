@@ -1,6 +1,9 @@
 ![Alt text](https://github.com/cathoderay/minifyme/raw/master/wiki/minifyme.png)
 
+
 Welcome to our (because it's open source) funny js minification/compression project.
+Now, depending on the structure of your code, this minifier can harm it. It's still a work in progress.
+
 
 How to use
 -------
@@ -43,4 +46,5 @@ Not yet a requirement for this project. It's just for fun!
 Next steps
 ---------
 Parse js decently.
+
 Remove unnecessary white spaces.
