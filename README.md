@@ -20,7 +20,7 @@ Try https://github.com/reid/node-jslint
     
         Removed bytes: 0.45% 
     
-    File test.min.js written.
+    File file.min.js written.
 
 
 How it works
